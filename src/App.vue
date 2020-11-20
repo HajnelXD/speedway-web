@@ -1,32 +1,36 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div
+    id="app"
+    class="basic"
+  >
+    <team-results-table
+      class="position"
+    />
   </div>
 </template>
 
+<script>
+import TeamResultsTable from '@/components/team-results-table.vue';
+
+export default {
+  components: { TeamResultsTable },
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.basic {
+  align-items: center;
+  justify-content: center;
+  font-family: Helvetica;
+  background-color: #3B3F39;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  display: flex;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.position {
+  width: 40%;
+  height: 50%;
 }
 </style>
