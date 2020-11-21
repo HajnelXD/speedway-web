@@ -1,29 +1,32 @@
 <template>
-  <table class="table table-border">
-    <tr>
-      <th
-        v-for="header in headers"
-        :key="header"
-        :class="header !== 'Team' ? 'header-cell' : 'header-name-cell'"
+  <div class="outside">
+    <table class="table-border">
+      <tr>
+        <th
+          v-for="header in headers"
+          :key="header"
+          class="cell header-cell"
+          :class="header === 'Team' ? 'name-cell' : 'cell-size'"
+        >
+          {{ header }}
+        </th>
+      </tr>
+      <tr
+        v-for="team in values"
+        :key="team.name"
       >
-        {{ header }}
-      </th>
-    </tr>
-    <tr
-      v-for="team in values"
-      :key="team.name"
-    >
-      <td class="cell"> {{ values.indexOf(team) + 1 }} </td>
-      <td class="name-cell"> {{ team.name }}</td>
-      <td class="cell"> {{ team.matches }} </td>
-      <td class="cell"> {{ team.points }} </td>
-      <td class="cell"> {{ team.bonus }} </td>
-      <td class="cell"> {{ team.small_points }} </td>
-      <td class="cell"> {{ team.wins }} </td>
-      <td class="cell"> {{ team.draws }}</td>
-      <td class="cell"> {{ team.losers }}</td>
-    </tr>
-  </table>
+        <td class="cell data-cell"> {{ values.indexOf(team) + 1 }} </td>
+        <td class="cell data-cell name-cell"> {{ team.name }}</td>
+        <td class="cell data-cell"> {{ team.matches }} </td>
+        <td class="cell data-cell"> {{ team.points }} </td>
+        <td class="cell data-cell"> {{ team.bonus }} </td>
+        <td class="cell data-cell"> {{ team.small_points }} </td>
+        <td class="cell data-cell"> {{ team.wins }} </td>
+        <td class="cell data-cell"> {{ team.draws }}</td>
+        <td class="cell data-cell"> {{ team.losers }}</td>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -72,46 +75,40 @@ export default {
 
 <style scoped>
 
-.table {
+  .outside {
+    height: 100%;
+    width: 100%;
+  }
 
-}
+  .table-border {
+    height: 100%;
+    border: none;
+    border-collapse: collapse;
+  }
 
-.table-border {
-  border: none;
-  border-collapse: collapse;
-}
+  .cell {
+    text-align: center;
+    font-size: 18px;
+  }
 
-.cell {
-  background-color: #B8E4F3;
-  border-bottom: 1px solid #0C5D79;
-  text-align: center;
-  font-size: 18px;
-  color: #3B3F39;
-}
+  .cell-size {
+    width: 5%;
+  }
 
-.name-cell {
-  background-color: #B8E4F3;
-  border-bottom: 1px solid #0C5D79;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  min-width: 200px;
-  color: #3B3F39;
-}
+  .data-cell {
+    background-color: #B8E4F3;
+    border-bottom: 1px solid #0C5D79;
+    color: #3B3F39;
+  }
 
-.header-cell {
-  background-color: #0C5D79;
-  border-collapse: collapse;
-  text-align: center;
-  font-size: 18px;
-  color: #FFFFFF;
-}
+  .header-cell {
+    background-color: #0C5D79;
+    border-collapse: collapse;
+    color: #FFFFFF;
+  }
 
-.header-name-cell {
-  background-color: #0C5D79;
-  border-collapse: collapse;
-  text-align: center;
-  font-size: 18px;
-  color: #FFFFFF;
-}
+  .name-cell {
+    min-width: 200px;
+    font-weight: bold;
+  }
 </style>
