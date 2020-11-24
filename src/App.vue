@@ -8,7 +8,12 @@
       class="page"
     >
       <div class="left">
-        <team-results-table />
+        <select-year
+          v-model="year"
+        />
+        <team-results-table
+          :year="year"
+        />
       </div>
       <div class="right">
       </div>
@@ -19,17 +24,21 @@
 <script>
 import TeamResultsTable from '@/components/team-results-table.vue';
 import PageHeader from '@/components/header.vue';
+import SelectYear from '@/components/select-year.vue';
 
 export default {
-  components: { PageHeader, TeamResultsTable },
+  components: { PageHeader, SelectYear, TeamResultsTable },
+
+  data() {
+    return {
+      year: null,
+    };
+  },
 };
 </script>
 
 <style>
   .basic {
-    display: block;
-    align-items: center;
-    justify-content: center;
     font-family: Helvetica;
     background-color: #3B3F39;
     height: 100%;
@@ -39,19 +48,12 @@ export default {
 
   .page {
     display: flex;
-    height: 90%;
-    width: 100%;
-    position: fixed;
   }
 
   .left {
-    padding: 2% 1% 2% 2%;
-    width: 48%;
-    height: 91%;
+    width: 960px;
   }
   .right {
-    padding: 2% 2% 2% 1%;
-    width: 48%;
-    height: 91%;
+    width: 960px;
   }
 </style>

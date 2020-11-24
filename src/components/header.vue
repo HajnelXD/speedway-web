@@ -23,7 +23,7 @@ export default {
     border-bottom: #B8E4F3;
     display: flex;
     align-items: center;
-    height: 10%;
+    height: 100px;
     padding-left: 40px;
   }
 
