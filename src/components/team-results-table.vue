@@ -7,8 +7,9 @@
             v-for="header in headers"
             :key="header"
             class="cell header-cell"
-            :class="header === 'Drużyna' ? 'name-cell' : 'cell-size'"
+            :class="changeClass(header)"
           >
+            <!--            :class="header === 'Drużyna' ? 'name-cell' : 'cell-size'"-->
             {{ header }}
           </th>
         </tr>
@@ -76,6 +77,18 @@ export default {
     compareResults(first, second) {
       return second.points - first.points;
     },
+
+    changeClass(header) {
+      let returnedClass;
+      if (header === this.headers[1]) returnedClass = 'name-cell';
+      else {
+        returnedClass = 'cell-size';
+        if (header === this.headers[0]) returnedClass += ' left-cell';
+        else if (header === this.headers[8]) returnedClass += ' right-cell';
+      }
+      console.log(header);
+      return returnedClass;
+    },
   },
 
   watch: {
@@ -140,6 +153,14 @@ export default {
     color: #FFFFFF;
     font-size: 40px;
     height: 720px;
+  }
+
+  .left-cell {
+    border-radius: 20px 0 0 0;
+  }
+
+  .right-cell {
+    border-radius: 0 20px 0 0;
   }
 
 </style>

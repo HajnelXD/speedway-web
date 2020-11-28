@@ -16,6 +16,9 @@
         />
       </div>
       <div class="right">
+        <timetable
+          :year="year"
+        />
       </div>
     </div>
   </div>
@@ -25,9 +28,12 @@
 import TeamResultsTable from '@/components/team-results-table.vue';
 import PageHeader from '@/components/header.vue';
 import SelectYear from '@/components/select-year.vue';
+import Timetable from '@/components/timetable.vue';
 
 export default {
-  components: { PageHeader, SelectYear, TeamResultsTable },
+  components: {
+    Timetable, PageHeader, SelectYear, TeamResultsTable,
+  },
 
   data() {
     return {
@@ -40,7 +46,7 @@ export default {
 <style>
   .basic {
     font-family: Helvetica;
-    background-color: #3B3F39;
+    background-color: #B8E4F3;
     height: 100%;
     position: absolute;
     width: 100%;
@@ -51,9 +57,9 @@ export default {
   }
 
   .left {
-    width: 960px;
+    width: 50%;
   }
   .right {
-    width: 960px;
+    width: 50%;
   }
 </style>
