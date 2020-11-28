@@ -1,31 +1,39 @@
 <template>
   <div class="outside">
-    <table class="table-border">
-      <tr>
-        <th
-          v-for="header in headers"
-          :key="header"
-          class="cell header-cell"
-          :class="header === 'Team' ? 'name-cell' : 'cell-size'"
+    <div v-if="values">
+      <table class="table-border">
+        <tr>
+          <th
+            v-for="header in headers"
+            :key="header"
+            class="cell header-cell"
+            :class="header === 'Drużyna' ? 'name-cell' : 'cell-size'"
+          >
+            {{ header }}
+          </th>
+        </tr>
+        <tr
+           v-for="team in values"
+          :key="team.name"
         >
-          {{ header }}
-        </th>
-      </tr>
-      <tr
-        v-for="team in values"
-        :key="team.name"
-      >
-        <td class="cell data-cell"> {{ values.indexOf(team) + 1 }} </td>
-        <td class="cell data-cell name-cell"> {{ team.name }}</td>
-        <td class="cell data-cell"> {{ team.matches }} </td>
-        <td class="cell data-cell"> {{ team.points }} </td>
-        <td class="cell data-cell"> {{ team.bonus }} </td>
-        <td class="cell data-cell"> {{ team.small_points }} </td>
-        <td class="cell data-cell"> {{ team.wins }} </td>
-        <td class="cell data-cell"> {{ team.draws }}</td>
-        <td class="cell data-cell"> {{ team.losers }}</td>
-      </tr>
-    </table>
+          <td class="cell data-cell"> {{ values.indexOf(team) + 1 }} </td>
+          <td class="cell data-cell name-cell"> {{ team.name }}</td>
+          <td class="cell data-cell"> {{ team.matches }} </td>
+          <td class="cell data-cell"> {{ team.points }} </td>
+          <td class="cell data-cell"> {{ team.bonus }} </td>
+          <td class="cell data-cell"> {{ team.small_points }} </td>
+          <td class="cell data-cell"> {{ team.wins }} </td>
+          <td class="cell data-cell"> {{ team.draws }}</td>
+          <td class="cell data-cell"> {{ team.losers }}</td>
+        </tr>
+      </table>
+    </div>
+    <div
+      v-else
+      class="error_message"
+    >
+      Brak danych z tego roku.
+    </div>
   </div>
 </template>
 
@@ -38,21 +46,24 @@ Vue.use(VueAxios, axios);
 
 export default {
   name: 'team-results-table',
+
+  props: [
+    'year',
+  ],
+
   data() {
     return {
       headers: ['Lp.', 'Drużyna', 'Mecze', 'Punkty', 'Bonusy', '+/-', 'Wygrane', 'Remisy', 'Porażki'],
-      year: 2020,
       values: null,
     };
   },
 
   methods: {
-    get_data() {
-      Vue.axios.get(`${process.env.VUE_APP_BACKEND_URL}summary/${this.year}`)
+    getData() {
+      Vue.axios.get(`${process.env.VUE_APP_BACKEND_URL}summary/${this.year.year}`)
         .then((response) => {
           this.values = response.data;
           this.tableValues();
-          console.log(this.values);
         });
     },
 
@@ -67,8 +78,18 @@ export default {
     },
   },
 
-  created() {
-    this.get_data();
+  watch: {
+    year() {
+      if (this.year) {
+        this.getData();
+      }
+    },
+  },
+
+  mounted() {
+    if (this.year) {
+      this.getData();
+    }
   },
 };
 </script>
@@ -76,12 +97,11 @@ export default {
 <style scoped>
 
   .outside {
-    height: 100%;
-    width: 100%;
+    padding-left: 20px;
+    padding-top: 20px;
   }
 
   .table-border {
-    height: 100%;
     border: none;
     border-collapse: collapse;
   }
@@ -89,10 +109,11 @@ export default {
   .cell {
     text-align: center;
     font-size: 18px;
+    height: 80px;
   }
 
   .cell-size {
-    width: 5%;
+    width: 78px;
   }
 
   .data-cell {
@@ -108,7 +129,17 @@ export default {
   }
 
   .name-cell {
-    min-width: 200px;
     font-weight: bold;
+    width: 278px;
   }
+
+  .error_message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 40px;
+    height: 720px;
+  }
+
 </style>
