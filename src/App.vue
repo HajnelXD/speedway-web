@@ -8,16 +8,20 @@
       class="page"
     >
       <div class="left">
-        <select-year
-          v-model="year"
-        />
+        <select-year/>
         <team-results-table
           :year="year"
         />
       </div>
       <div class="right">
         <timetable
+          v-if="!selected"
           :year="year"
+        />
+        <team-details
+          v-else
+          :year="year"
+          :team-id="selected"
         />
       </div>
     </div>
@@ -29,16 +33,21 @@ import TeamResultsTable from '@/components/team-results-table.vue';
 import PageHeader from '@/components/header.vue';
 import SelectYear from '@/components/select-year.vue';
 import Timetable from '@/components/timetable.vue';
+import TeamDetails from '@/components/team-details.vue';
 
 export default {
   components: {
-    Timetable, PageHeader, SelectYear, TeamResultsTable,
+    Timetable, PageHeader, SelectYear, TeamResultsTable, TeamDetails,
   },
 
-  data() {
-    return {
-      year: null,
-    };
+  computed: {
+    year() {
+      return this.$store.getters.getYear;
+    },
+
+    selected() {
+      return this.$store.getters.getSelectedTeam;
+    },
   },
 };
 </script>

@@ -9,23 +9,23 @@
             class="cell header-cell"
             :class="changeClass(header)"
           >
-            <!--            :class="header === 'Drużyna' ? 'name-cell' : 'cell-size'"-->
             {{ header }}
           </th>
         </tr>
         <tr
            v-for="team in values"
-          :key="team.name"
+          :key="team.name.id"
+           @click="showDetails(team.name.id)"
         >
           <td class="cell data-cell"> {{ values.indexOf(team) + 1 }} </td>
-          <td class="cell data-cell name-cell"> {{ team.name }}</td>
+          <td class="cell data-cell name-cell"> {{ team.name.team_name }} </td>
           <td class="cell data-cell"> {{ team.matches }} </td>
           <td class="cell data-cell"> {{ team.points }} </td>
           <td class="cell data-cell"> {{ team.bonus }} </td>
           <td class="cell data-cell"> {{ team.small_points }} </td>
           <td class="cell data-cell"> {{ team.wins }} </td>
-          <td class="cell data-cell"> {{ team.draws }}</td>
-          <td class="cell data-cell"> {{ team.losers }}</td>
+          <td class="cell data-cell"> {{ team.draws }} </td>
+          <td class="cell data-cell"> {{ team.losers }} </td>
         </tr>
       </table>
     </div>
@@ -56,6 +56,7 @@ export default {
     return {
       headers: ['Lp.', 'Drużyna', 'Mecze', 'Punkty', 'Bonusy', '+/-', 'Wygrane', 'Remisy', 'Porażki'],
       values: null,
+      selected: null,
     };
   },
 
@@ -86,8 +87,11 @@ export default {
         if (header === this.headers[0]) returnedClass += ' left-cell';
         else if (header === this.headers[8]) returnedClass += ' right-cell';
       }
-      console.log(header);
       return returnedClass;
+    },
+
+    showDetails(teamId) {
+      this.$store.commit('updateSelectedTeam', teamId);
     },
   },
 
@@ -98,7 +102,6 @@ export default {
       }
     },
   },
-
   mounted() {
     if (this.year) {
       this.getData();
@@ -133,6 +136,7 @@ export default {
     background-color: #B8E4F3;
     border-bottom: 1px solid #0C5D79;
     color: #3B3F39;
+    cursor: pointer;
   }
 
   .header-cell {
