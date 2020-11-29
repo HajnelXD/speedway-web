@@ -65,7 +65,8 @@ export default {
 
   watch: {
     selected() {
-      this.$emit('input', this.selected);
+      this.$store.commit('updateYear', this.selected);
+      // this.$emit('input', this.selected);
     },
   },
 };
@@ -84,6 +85,7 @@ export default {
 
   >>> .vs__dropdown-toggle {
     padding: 0;
+    border: none;
   }
 
   >>> .vs__selected {
@@ -102,6 +104,10 @@ export default {
 
   >>> .vs__actions {
     padding-top: 0;
+  }
+
+  >>> .vs__open-indicator {
+    fill: #0C5D79;
   }
 
 </style>

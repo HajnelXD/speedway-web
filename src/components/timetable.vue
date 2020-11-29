@@ -1,8 +1,16 @@
 <template>
   <div class="outside">
     <div class="buttons">
-      <img src="@/assets/icons/arrow.svg" class="icon" v-on:click="previousQueue"/>
-      <img src="@/assets/icons/arrow.svg" class="icon inverted-icon" v-on:click="nextQueue"/>
+      <img
+        v-if="queue !== 1"
+        src="@/assets/icons/arrow.svg"
+        class="icon"
+        @click="previousQueue"/>
+      <img
+        v-if="queue !== lastQueueValue"
+        src="@/assets/icons/arrow.svg"
+        class="icon inverted-icon right-icon"
+        @click="nextQueue"/>
     </div>
     <table
       v-if="year"
@@ -26,9 +34,6 @@
             </div>
           </div>
         </td>
-<!--        <td class="cell logo-cell data-cell">-->
-<!--          -->
-<!--        </td>-->
         <td class="cell cell-size data-cell">
           {{ match.home_team_points }}
         </td>
@@ -52,7 +57,6 @@
 </template>
 
 <script>
-// import Arrow from '@/assets/icons/arrow.svg';
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -61,9 +65,6 @@ Vue.use(VueAxios, axios);
 
 export default {
   name: 'timetable',
-  // components: {
-  //   Arrow,
-  // },
 
   props: {
     year: {
@@ -75,6 +76,7 @@ export default {
     return {
       seasonMatches: {},
       queue: 0,
+      lastQueueValue: 0,
     };
   },
 
@@ -92,6 +94,7 @@ export default {
         )).data;
         this.queue = this.currentQueueValue();
       }
+      this.lastQueueValue = this.lastQueue();
     },
 
     currentQueueValue() {
@@ -116,8 +119,11 @@ export default {
     },
 
     lastQueue() {
-      const queue = this.seasonMatches.map((queValue) => queValue.queue);
-      return Math.max.apply(null, queue);
+      if (this.seasonMatches.length) {
+        const queue = this.seasonMatches.map((queValue) => queValue.queue);
+        return Math.max.apply(null, queue);
+      }
+      return 0;
     },
   },
 
@@ -148,14 +154,20 @@ export default {
     cursor: pointer;
   }
 
+  .right-icon {
+    position: absolute;
+    right: 40px;
+    align-items: flex-end;
+  }
+
   .inverted-icon {
     transform: rotate(180deg);
   }
 
   .buttons{
     display: flex;
-    justify-content: space-between;
     width: 880px;
+    height: 40px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 6px;
