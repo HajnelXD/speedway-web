@@ -39,11 +39,13 @@ export default {
 
   methods: {
     get_years() {
+      const currentYear = this.$store.getters.getYear;
       Vue.axios.get(`${process.env.VUE_APP_BACKEND_URL}teams/years`)
         .then((response) => {
           this.years = response.data;
           this.sortYears();
-          [this.selected] = response.data;
+          if (currentYear) this.selected = currentYear;
+          else [this.selected] = response.data;
         });
     },
 
@@ -66,7 +68,6 @@ export default {
   watch: {
     selected() {
       this.$store.commit('updateYear', this.selected);
-      // this.$emit('input', this.selected);
     },
   },
 };
