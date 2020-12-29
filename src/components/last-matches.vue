@@ -45,7 +45,6 @@
         </td>
       </tr>
     </table>
-    {{ matches }}
   </div>
 </template>
 
@@ -111,7 +110,7 @@ export default {
   }
 
   .size {
-    height: 36px;
+    height: 34px;
     width: 80px;
   }
 
