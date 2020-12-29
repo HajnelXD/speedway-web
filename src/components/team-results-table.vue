@@ -48,10 +48,11 @@ Vue.use(VueAxios, axios);
 export default {
   name: 'team-results-table',
 
-  props: [
-    'year',
-  ],
-
+  computed: {
+    year() {
+      return this.$store.getters.getYear;
+    },
+  },
   data() {
     return {
       headers: ['Lp.', 'Drużyna', 'Mecze', 'Punkty', 'Bonusy', '+/-', 'Wygrane', 'Remisy', 'Porażki'],

@@ -85,7 +85,7 @@ export default {
     display: flex;
     max-width: 920px;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
   }
 
   .tile {

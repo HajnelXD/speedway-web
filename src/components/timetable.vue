@@ -19,6 +19,7 @@
       <tr
         v-for="match in queueMatches"
         :key="match.id"
+        @click="goToMatchStatistics(match)"
       >
         <td class="cell date-cell data-cell">
           {{ match.date }}
@@ -38,7 +39,7 @@
           {{ match.home_team_points }}
         </td>
         <td class="cell cell-size data-cell">
-          {{ match.home_team_points }}
+          {{ match.guest_team_points }}
         </td>
         <td class="cell name-cell data-cell">
           <div class="team">
@@ -124,6 +125,16 @@ export default {
         return Math.max.apply(null, queue);
       }
       return 0;
+    },
+
+    goToMatchStatistics(match) {
+      this.$router.push({
+        name: 'match-stats',
+        params: {
+          homeId: match.home_team.id,
+          guestId: match.guest_team.id,
+        },
+      });
     },
   },
 
