@@ -15,20 +15,40 @@
       class="page"
     >
       <div class="left">
-        <div class="text">
-          Mecze w obecnym sezonie
+        <div style="padding-right: 5px">
+          <div class="text">
+            Mecze w obecnym sezonie
+          </div>
+          <last-matches
+            :team-id="home_team_id"
+          />
         </div>
-        <last-matches
-          :team-id="home_team_id"
-        />
+        <div style="padding-left: 5px">
+          <div class="text">
+            Statystyki zawodników
+          </div>
+          <RiderStatsTable
+            :team-id="home_team_id"
+          />
+        </div>
       </div>
       <div class="right">
-        <div class="text">
-          Mecze w obecnym sezonie
+        <div style="padding-right: 5px">
+          <div class="text">
+            Mecze w obecnym sezonie
+          </div>
+          <last-matches
+            :team-id="guest_team_id"
+          />
         </div>
-        <last-matches
-          :team-id="guest_team_id"
-        />
+        <div style="padding-left: 5px">
+          <div class="text">
+            Statystyki zawodników
+          </div>
+          <RiderStatsTable
+            :team-id="guest_team_id"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -36,11 +56,12 @@
 
 <script>
 import LastMatches from '@/components/last-matches.vue';
+import RiderStatsTable from '@/components/riders-stats-table.vue';
 import Vue from 'vue';
 
 export default {
   name: 'match_statistics',
-  components: { LastMatches },
+  components: { LastMatches, RiderStatsTable },
   data() {
     return {
       home_team_id: this.$route.params.homeId,
@@ -81,10 +102,12 @@ export default {
 
   .left {
     padding: 0 10px 20px 20px;
+    display: flex;
   }
 
   .right {
     padding: 0 20px 20px 10px;
+    display: flex;
   }
 
   .text {
