@@ -46,7 +46,7 @@ export default {
     },
   },
 
-  props: ['teamId'],
+  props: ['teamId', 'homeTeamId'],
 
   methods: {
     header_class(header) {
@@ -59,10 +59,15 @@ export default {
     },
 
     async getRidersStats() {
-      if (this.year) {
+      if (this.year && !this.homeTeamId) {
         this.stats = (await Vue.axios.get(
           `${process.env.VUE_APP_BACKEND_URL}matches/team_riders_points/
           ${this.teamId}/${this.year.year}`,
+        )).data;
+      } else if (this.year) {
+        this.stats = (await Vue.axios.get(
+          `${process.env.VUE_APP_BACKEND_URL}matches/rider_stas_vs/
+          ${this.homeTeamId}/${this.teamId}/${this.year.year}`,
         )).data;
       }
     },
@@ -79,6 +84,9 @@ export default {
       }
     },
     teamId() {
+      this.getData();
+    },
+    homeTeamId() {
       this.getData();
     },
   },

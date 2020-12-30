@@ -30,6 +30,13 @@
           <RiderStatsTable
             :team-id="home_team_id"
           />
+          <div class="text" style="padding-top: 5px" >
+            Statystyki zawodników na tym stadionie
+          </div>
+          <RiderStatsTable
+            :team-id="home_team_id"
+            :home-team-id="home_team_id"
+          />
         </div>
       </div>
       <div class="right">
@@ -47,6 +54,13 @@
           </div>
           <RiderStatsTable
             :team-id="guest_team_id"
+          />
+          <div class="text" style="padding-top: 5px" >
+            Statystyki zawodników na tym stadionie
+          </div>
+          <RiderStatsTable
+            :team-id="guest_team_id"
+            :home-team-id="home_team_id"
           />
         </div>
       </div>
