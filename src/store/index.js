@@ -7,6 +7,8 @@ export default new Vuex.Store({
   state: {
     year: null,
     selectedTeam: null,
+    selectedHostRider: null,
+    selectedGuestRider: null,
   },
   mutations: {
     updateYear(state, year) {
@@ -16,9 +18,19 @@ export default new Vuex.Store({
     updateSelectedTeam(state, selectedTeam) {
       state.selectedTeam = selectedTeam;
     },
+
+    updateSelectedHostRider(state, selectedRider) {
+      state.selectedHostRider = selectedRider;
+    },
+
+    updateSelectedGuestRider(state, selectedRider) {
+      state.selectedGuestRider = selectedRider;
+    },
   },
+
   actions: {
   },
+
   getters: {
     getYear(state) {
       return state.year;
@@ -26,6 +38,14 @@ export default new Vuex.Store({
 
     getSelectedTeam(state) {
       return state.selectedTeam;
+    },
+
+    getSelectedHostRider(state) {
+      return state.selectedHostRider;
+    },
+
+    getSelectedGuestRider(state) {
+      return state.selectedGuestRider;
     },
   },
   modules: {

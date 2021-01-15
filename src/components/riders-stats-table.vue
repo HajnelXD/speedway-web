@@ -17,7 +17,13 @@
       v-for="stat in stats"
       :key="stat.rider.id"
     >
-      <td class="cell">{{ stat.rider.last_name }} {{ stat.rider.first_name }}</td>
+      <td
+        class="cell"
+        @click="selectRider(stat.rider.id)"
+        style="cursor: pointer"
+      >
+        {{ stat.rider.last_name }} {{ stat.rider.first_name }}
+      </td>
       <td class="cell text_position">{{ stat.matches }}</td>
       <td class="cell text_position">{{ stat.points_sum }}</td>
       <td class="cell text_position">{{ stat.bonuses }}</td>
@@ -46,7 +52,7 @@ export default {
     },
   },
 
-  props: ['teamId', 'homeTeamId'],
+  props: ['teamId', 'homeTeamId', 'type'],
 
   methods: {
     header_class(header) {
@@ -69,6 +75,14 @@ export default {
           `${process.env.VUE_APP_BACKEND_URL}matches/rider_stas_vs/
           ${this.homeTeamId}/${this.teamId}/${this.year.year}`,
         )).data;
+      }
+    },
+
+    selectRider(riderId) {
+      if (this.type === 'host') {
+        this.$store.commit('updateSelectedHostRider', riderId);
+      } else {
+        this.$store.commit('updateSelectedGuestRider', riderId);
       }
     },
   },
