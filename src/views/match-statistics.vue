@@ -3,10 +3,16 @@
     <div class="button-header">
       <img src="@/assets/icons/arrow.svg" class="icon" @click="back"/>
       <div class="team-names">
-        <div class="text position-team-name">
+        <div
+          v-if="!selectedGuestRider"
+          class="text position-team-name"
+        >
           {{ home_team.team_name }}
         </div>
-        <div class="text position-team-name">
+        <div
+          v-if="!selectedHostRider"
+          class="text position-team-name"
+        >
           {{ guest_team.team_name }}
         </div>
       </div>
@@ -15,52 +21,76 @@
       class="page"
     >
       <div class="left">
-        <div style="padding-right: 5px">
-          <div class="text">
-            Mecze w obecnym sezonie
+        <div
+          v-if="!selectedGuestRider"
+          style="display: flex"
+        >
+          <div style="padding-right: 5px">
+            <div class="text">
+              Mecze w obecnym sezonie
+            </div>
+            <last-matches
+              :team-id="home_team_id"
+            />
           </div>
-          <last-matches
-            :team-id="home_team_id"
-          />
+          <div style="padding-left: 5px">
+            <div class="text">
+              Statystyki zawodników
+            </div>
+            <RiderStatsTable
+              :team-id="home_team_id"
+              type="host"
+            />
+            <div class="text" style="padding-top: 5px" >
+              Statystyki zawodników na tym stadionie
+            </div>
+            <RiderStatsTable
+              :team-id="home_team_id"
+              :home-team-id="home_team_id"
+              type="host"
+            />
+          </div>
         </div>
-        <div style="padding-left: 5px">
-          <div class="text">
-            Statystyki zawodników
-          </div>
-          <RiderStatsTable
-            :team-id="home_team_id"
-          />
-          <div class="text" style="padding-top: 5px" >
-            Statystyki zawodników na tym stadionie
-          </div>
-          <RiderStatsTable
-            :team-id="home_team_id"
-            :home-team-id="home_team_id"
+        <div v-else>
+          <rider-details
+            :rider-id="selectedGuestRider"
           />
         </div>
       </div>
       <div class="right">
-        <div style="padding-right: 5px">
-          <div class="text">
-            Mecze w obecnym sezonie
+        <div
+          v-if="!selectedHostRider"
+          style="display: flex"
+        >
+          <div style="padding-right: 5px">
+            <div class="text">
+              Mecze w obecnym sezonie
+            </div>
+            <last-matches
+              :team-id="guest_team_id"
+            />
           </div>
-          <last-matches
-            :team-id="guest_team_id"
-          />
+          <div style="padding-left: 5px">
+            <div class="text">
+              Statystyki zawodników
+            </div>
+            <RiderStatsTable
+              :team-id="guest_team_id"
+              type="guest"
+            />
+            <div class="text" style="padding-top: 5px" >
+              Statystyki zawodników na tym stadionie
+            </div>
+            <RiderStatsTable
+              :team-id="guest_team_id"
+              :home-team-id="home_team_id"
+              type="guest"
+            />
+          </div>
         </div>
-        <div style="padding-left: 5px">
-          <div class="text">
-            Statystyki zawodników
-          </div>
-          <RiderStatsTable
-            :team-id="guest_team_id"
-          />
-          <div class="text" style="padding-top: 5px" >
-            Statystyki zawodników na tym stadionie
-          </div>
-          <RiderStatsTable
-            :team-id="guest_team_id"
-            :home-team-id="home_team_id"
+        <div v-else>
+          <rider-details
+            :rider-id="selectedHostRider"
           />
         </div>
       </div>
@@ -69,13 +99,15 @@
 </template>
 
 <script>
+import Vue from 'vue';
+
+import RiderDetails from '@/components/rider-details.vue';
 import LastMatches from '@/components/last-matches.vue';
 import RiderStatsTable from '@/components/riders-stats-table.vue';
-import Vue from 'vue';
 
 export default {
   name: 'match_statistics',
-  components: { LastMatches, RiderStatsTable },
+  components: { RiderDetails, LastMatches, RiderStatsTable },
   data() {
     return {
       home_team_id: this.$route.params.homeId,
@@ -85,8 +117,15 @@ export default {
     };
   },
 
+  computed: {
+    selectedGuestRider() { return this.$store.getters.getSelectedGuestRider; },
+    selectedHostRider() { return this.$store.getters.getSelectedHostRider; },
+  },
+
   methods: {
     back() {
+      this.$store.commit('updateSelectedHostRider', null);
+      this.$store.commit('updateSelectedGuestRider', null);
       this.$router.push('/');
     },
 
