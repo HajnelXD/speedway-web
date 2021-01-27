@@ -103,7 +103,7 @@ export default {
       ],
       points: [
         'points_in_first_run', 'points_in_second_run', 'points_in_third_run', 'points_in_fourth_run',
-        'points_in_fifth_run', 'points_in_seventh_run', 'points_in_sixth_run',
+        'points_in_fifth_run', 'points_in_sixth_run', 'points_in_seventh_run',
       ],
       places: [
         'first_places', 'second_places', 'third_places', 'fourth_places', 'other_events',
