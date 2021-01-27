@@ -18,9 +18,15 @@
         <div class="text">
           {{ rider.rider.birthday }} {{ rider.rider.nationality }}
         </div>
-        <div v-if="rider.junior === 'Y'" class="text">
+        <div v-if="junior_status(rider)" class="text">
           Junior
         </div>
+      </div>
+      <div
+        v-if="!teamList.length"
+        class="message"
+      >
+        Brak składów
       </div>
     </div>
   </div>
@@ -56,7 +62,20 @@ export default {
       }
     },
 
+    junior_status(rider) {
+      const d = new Date();
+      const year = d.getFullYear();
+      const riderYear = new Date(rider.rider.birthday);
+      if (rider.junior === 'T' || (
+        rider.rider.nationality === 'Polska' && year - riderYear.getFullYear() <= 21
+      )) {
+        return true;
+      }
+      return false;
+    },
+
     back() {
+      console.log(this.teamList);
       this.$store.commit('updateSelectedTeam', null);
     },
   },
@@ -106,6 +125,13 @@ export default {
     padding-left: 40px;
     padding-right: 20px;
     padding-top: 20px;
+  }
+
+  .message {
+    font-size: 20px;
+    color: #3B3F39;
+    font-weight: bold;
+    padding-top: 300px;
   }
 
 </style>

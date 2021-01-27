@@ -1,4 +1,5 @@
 <template>
+  <div>
   <table class="table-border">
     <tr>
       <th
@@ -32,6 +33,12 @@
       <td class="cell text_position">{{ stat.runs_average }}</td>
     </tr>
   </table>
+  <div v-if="!stats.length">
+    <div class="message">
+      Brak danych
+    </div>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -146,6 +153,16 @@ export default {
 
   .text_position {
     text-align: center;
+  }
+
+  .message {
+    font-size: 20px;
+    color: #3B3F39;
+    font-weight: bold;
+    padding-top: 150px;
+    padding-bottom: 150px;
+    text-align: center;
+    width: 553px;
   }
 
 </style>
