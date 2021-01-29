@@ -11,7 +11,11 @@
         :key="rider.rider.id"
         class="tile"
       >
-        <img src="@/assets/placeholders/rider_placeholder.jpeg" width="200" height="200">
+        <img
+          :src=photo(rider.rider.rider_photo)
+          width="200"
+          height="200"
+        >
         <div class="text">
           {{ rider.rider.first_name }} {{ rider.rider.last_name }}
         </div>
@@ -36,6 +40,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import image from '@/assets/placeholders/rider_placeholder.jpeg';
 
 Vue.use(VueAxios, axios);
 
@@ -75,8 +80,15 @@ export default {
     },
 
     back() {
-      console.log(this.teamList);
       this.$store.commit('updateSelectedTeam', null);
+    },
+
+    photo(photoName) {
+      let img = image;
+      if (photoName) {
+        img = `./photos/${photoName}.jpg`;
+      }
+      return img;
     },
   },
 

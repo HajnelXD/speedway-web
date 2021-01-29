@@ -143,5 +143,6 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/webstorm,vue,vuejs,yarn
 
-/src/assets/photos
+/public/photos
+/public/logos
 .env
