@@ -27,8 +27,9 @@
         <td class="cell name-cell data-cell">
           <div class="team">
             <img
-              src="@/assets/placeholders/logo_placeholder.png"
-              height="70" width="70"
+              :src=logo(match.home_team.team_photo)
+              height="70"
+              width="70"
             >
             <div>
               {{ match.home_team.team_name }}
@@ -44,7 +45,7 @@
         <td class="cell name-cell data-cell">
           <div class="team">
             <img
-              src="@/assets/placeholders/logo_placeholder.png"
+              :src=logo(match.guest_team.team_photo)
               height="70" width="70"
             >
             <div>
@@ -61,6 +62,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import image from '@/assets/placeholders/logo_placeholder.png';
 
 Vue.use(VueAxios, axios);
 
@@ -135,6 +137,14 @@ export default {
           guestId: match.guest_team.id,
         },
       });
+    },
+
+    logo(logoName) {
+      let img = image;
+      if (logoName) {
+        img = `./logos/${logoName}.jpg`;
+      }
+      return img;
     },
   },
 
